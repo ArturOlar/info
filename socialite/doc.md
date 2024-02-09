@@ -1,0 +1,1 @@
+Пакет - це готова реалізація зі сторони клієнта протоколу OAuth2.0 із ресурсами до: Facebook, Twitter, LinkedIn, Google, GitHub, GitLab, Bitbucket, та Slack.
