@@ -13,7 +13,7 @@
 
 ### Структура ElasticSearch
 
-- як згадувалось вище, ElasticSearch зберігає дані за принципом «без схеми». Це означає, що немає необхідності визначати структуру даних наперед, як це відбувається з реляційними базами даних
+- як згадувалось вище, ElasticSearch зберігає дані за принципом «без схеми». Це означає, що немає необхідності визначати структуру даних наперед, як це відбувається з реляційними базами даних. Хоч це і не рекомендується робити, найкращими практиками рахується коли схема визначена. 
 - можна зробити аналогію Sql баз-даних із ElasticSearch щоб краще розуміти структуру
     - `Indexes`
       - `index` - колекція `documents` що має подібні характеристики.  
@@ -23,29 +23,28 @@
     - `Documents`
       - `document` - основий юніт із інформацією. Це аналог рядків в relational databases
       - кожний `document` зберігається як JSON-object та представляє один запис даних. `Documents` в межах одного `index` можуть мати різну структуру та `fields`
-      - `Documents` - містить `field ID` який повинен бути унікальним. Ми можемо самостійно вказувати ID, або Elastic авматотично згенерує ID
+      - `Documents` - містить `field ID` який повинен бути унікальним. Ми можемо самостійно вказувати ID, або Elastic автоматично згенерує ID
     - `Fields`
       - `fields` - це key-value пара що і є контентом нашого `document`. Вони представляють атрибути які будуть індексуватись
-      - вони можуть містити різні типи даних: strings, numbers, dates, booleans, arrays, and nested objects
+      - вони можуть містити різні типи даних: strings, numbers, dates, booleans, arrays, nested objects, та інші
       - Elastic підтримує динамічний mapping, мається на увазі що він автоматично визначає тип даних та індексує `fields`. Також, ми можемо явно вказувати mapping для `fields` тим самим контролюючи як поля індексуються та аналізуються
       - `fields` - можуть бути `indexed (searchable)`, `stored (retrievable)` або обидва. В залежності від наших вимог
     - `Mapping`
-      - `mapping` - визначає як `fields` в межах `document` будуть індексуватись та зберігатись в Elastic. Він визначає тип даних, `analyzer` та інші `properties` для кожного `field`
+      - `mapping` - визначає як `fields` в межах `document` будуть індексуватись та зберігатись в Elastic. Він визначає тип даних, `analyzer` та інші `properties` (налаштування) для кожного `field`
       - існує два типи `mapping`: explicit та dynamic
         - `explicit` - це коли ми явно вказуємо структуру
         - `dynamic` - коли Elastic самостійно визначає структуру
-      - `mapping` - може також визначати кастомний `analyzer`, `tokenizers` та `filters` щоб контролювати як `fields` аналізуються та індексуються
+      - `mapping` - може також визначати кастомний `analyzer` (`char filter`, `tokenizers`, `filters`) щоб контролювати як `fields` аналізуються та індексуються
     - `Shard`
-      - `shard` - це базова одиниця в horizontal scalability в Elastic. Це підмножина даних індексу та містить частину даних індекса
+      - `shard` - це базова одиниця в horizontal scalability в Elastic. Це одиниця даних індексу яка містить частину даних `index`
       - коли ми створюємо `index`, Elastic автоматично ділить його в декілька шардів щоб розприділити дані по різним `nodes` в `cluster`
       - `shards` - дозволяють Elasticsearch масштабувати та обробляти великі обсяги даних шляхом розподілу робочого навантаження між кількома `nodes`.
     - `Replica`
       - `replica` - це копія `shard`. Elastic дозволяє налаштувати одну або більше `replicas` для кожного `shard` щоб надати redundancy та high availability
       - `replicas`  служать резервними копіями основних `shards`. Якщо `node` яка містить основний `shard` зафейлиться, то Elastic візьме одну із `replica shards` і зробить її основною
     - `Cluster`
-      - `cluster` - це колекція одного або більше `nodes` що спільно зберігають indexed дані в Elasticsearch
+      - `cluster` - це колекція одного або більше `nodes` що спільно зберігають дані в Elasticsearch
       - `nodes` в межах одного `cluster` спілкуються між собою для розподілу даних, координації операцій та підтримуванні `cluster health` 
-      - `clusters` - highly available and fault-tolerant, що дозволяє 
       - Elasticsearch clusters are highly available and fault-tolerant, що забезпечує роботу навіть у разі збою `node` в цьому `cluster` 
     - `Node`
       - `node` - це один інстанс Elasticsearch що працює на фізичній чи віртуальній машині
@@ -62,17 +61,8 @@
 - `mapping.md`
 - `analyzer.md`
 - `inverted-index.md`
+- `search.md`
+- `aggregations.md`
 - `extra.md`
 
 ---
-
-### Links
-
-- article - https://blog.avenuecode.com/elasticsearch
-- tokenizer, analyzer, token-filters - https://mallikarjuna91.medium.com/what-is-tokenizer-analyzer-and-filter-in-elasticsearch-317d4ec69ecc
-- inverted index - https://medium.com/@sujathamudadla1213/what-is-the-inverted-index-in-elastic-search-f04df6f0c806#:~:text=Inverted%20Index%20Creation%3A%20The%20inverted,of%20documents%20for%20each%20term.
-
-### TODO 
-
-- read this article - https://mallikarjuna91.medium.com/elasticsearch-building-a-simple-e-commerce-search-with-elasticsearch-part-1-7ba2f75e684c
-- read this article - https://codecurated.com/blog/introduction-to-analyzer-in-elasticsearch/

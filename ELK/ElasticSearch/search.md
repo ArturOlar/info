@@ -136,7 +136,7 @@ GET /products/_search
 ```
 
 Можливі опції для range пошуку: `gt`, `gte`, `lt`, `lte`. <br>
-Ці опції та їх аналог в SQL: `gt : >`, `gte : >=`, `lt - <`, `lte - <=`. <br>
+Ці опції та їх аналог в SQL: `gt : >`, `gte : >=`, `lt : <`, `lte : <=`. <br>
 Пошук по range по полях із типом integer
 ```
 GET /products/_search
